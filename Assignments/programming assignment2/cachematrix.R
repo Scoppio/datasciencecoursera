@@ -1,0 +1,34 @@
+## Calculates and keeps information related to inversed matrices
+
+## keeps the matrix and its inverse matrix value, also resets the value if a new matrix is created
+
+makeCacheMatrix <- function(x = matrix()) {
+   i <- NULL
+    set <- function(y) {
+        x <<- y
+        i <<- NULL
+    }
+    get <- function() x
+    setinverse <- function(inverse) i <<- inverse
+    getinverse <- function() i
+    list(set = set, get = get,
+         setinverse = setinverse,
+         getinverse = getinverse)
+}
+
+
+## cache solve will generate the inverse of the matrix, or retrieve it if the data is already calculated
+
+cacheSolve <- function(x, ...) {
+        ## Return a matrix that is the inverse of 'x'
+
+    i <- x$getinverse()
+    if (!is.null(i)) {
+        message("getting cached data")
+        return(i)
+    }
+    data <- x$get()
+    i <- solve(data)
+    x$setinverse(i)
+    i
+}
